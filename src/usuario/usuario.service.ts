@@ -11,8 +11,9 @@ export class UsuarioService {
 
   async createUser(createUserDto: CreateUserDto): Promise<Usuario>{
     const { email } = createUserDto;
-    const userFinding = this.usuarioModel.find({email}).exec();
 
+    const userFinding = await this.usuarioModel.findOne({email}).exec();
+    
     if(userFinding){
       throw new BadRequestException(`Usuário com email: ${email} já cadastrado`);
     }
