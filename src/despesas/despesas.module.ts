@@ -1,9 +1,16 @@
 import { Module } from '@nestjs/common';
-import { DespesasController } from './despesas.controller';
-import { DespesasService } from './despesas.service';
+import { DespesaController } from './despesas.controller';
+import { DespesaService } from './despesas.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { DespesaSchema } from './interface/despesa.schema';
+import { UsuarioModule } from 'src/usuario/usuario.module';
 
 @Module({
-  controllers: [DespesasController],
-  providers: [DespesasService]
+  imports: [
+    MongooseModule.forFeature([{name: "Despesa", schema: DespesaSchema}]),
+    UsuarioModule
+  ],
+  controllers: [DespesaController],
+  providers: [DespesaService]
 })
 export class DespesasModule {}
