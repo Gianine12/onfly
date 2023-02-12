@@ -18,6 +18,15 @@ export class Usuario {
 
   @Prop()
   avatarUrl: string;
+
+  constructor(usuario?: Partial<Usuario>){
+    this.email = usuario?.email;
+    this.avatarUrl = usuario?.avatarUrl;
+    this.name = usuario?.name;
+    this.password = usuario?.password;
+    this.phoneNumber = usuario?.phoneNumber;
+  }
+
 }
 
 export const UsuarioSchema = SchemaFactory.createForClass(Usuario);

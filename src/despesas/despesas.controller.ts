@@ -9,38 +9,42 @@ export class DespesaController {
 
   constructor(private readonly despesasService: DespesaService){}
 
-  @Post()
+  @Post('/:_id')
   @UsePipes(ValidationPipe)
   async createExpenses(
-    @Body() createExpenseDto: CreateExpenseDto){
+    @Body() createExpenseDto: CreateExpenseDto,
+    @Param('_id') _id: string
+    ) {
     return await this.despesasService.createExpense(createExpenseDto);
   }
 
-  @Get()
-  async getAllExpenses(): Promise<Array<Despesa>>{
+  @Get("/:_id")
+  async getAllExpenses(
+    @Param('_id') _id: string
+  ): Promise<Array<Despesa>>{
     return await this.despesasService.getAllExpense();
   }
 
-  @Get('/:_id')
+  @Get('/:_id/usuario/:idUser')
   async getSpecificExpenses(
-    @Param('_id') _id: string
+    @Param() params: string[]
   ): Promise<Despesa>{
-    return await this.despesasService.getSpecificExpense(_id);
+    return await this.despesasService.getSpecificExpense(params);
   }
 
-  @Put('/:_id')
+  @Put('/:_id/usuario/:idUser')
   @UsePipes(ValidationPipe)
   async updateExpenses(
     @Body() updateExpenseDto: UpdateExpenseDto,
-    @Param('_id') _id: string
+    @Param() params: string[]
   ): Promise<void>{
-    return await this.despesasService.updateExpense(updateExpenseDto, _id)
+    return await this.despesasService.updateExpense(updateExpenseDto, params)
   }
 
-  @Delete('/:_id')
+  @Delete('/:_id/usuario/:idUser')
   async deleteExpenses(
-    @Param('_id') _id: string
+    @Param() params: string[]
   ): Promise<void>{
-    return await this.despesasService.deleteExpense(_id);
+    return await this.despesasService.deleteExpense(params);
   }
 }

@@ -24,7 +24,10 @@ export class DespesaService {
     return await newExpense.save();
   }
 
-  async updateExpense(updateExpenseDto: UpdateExpenseDto, _id: string): Promise<void>{
+  async updateExpense(updateExpenseDto: UpdateExpenseDto, params: string[]): Promise<void>{
+    const _id = params['_id'];
+    const idUser = params['idUser'];
+
     await this.categoriaModel.findOneAndUpdate({_id}, {$set: updateExpenseDto}).exec();
   }
 
@@ -32,11 +35,23 @@ export class DespesaService {
     return await this.categoriaModel.find().exec();
   }
 
-  async getSpecificExpense(_id: string): Promise<Despesa>{
+  async getSpecificExpense(params: string[]): Promise<Despesa>{
+    const _id = params['_id'];
+    const idUser = params['idUser'];
+
     return await this.categoriaModel.findOne({_id}).exec();
   }
 
-  async deleteExpense(_id: string): Promise<void>{
+  async deleteExpense(params: string[]): Promise<void>{
+    const _id = params['_id'];
+    const idUser = params['idUser'];
+    
+    const verificaUSer = this.usuarioService.getUniqueUser(idUser);
+
+    if(!verificaUSer){
+      throw new NotFoundException(`Não foi possivel encontrar o usuário`);
+    }
+
     await this.categoriaModel.deleteOne({_id}).exec();
   }
 

@@ -1,11 +1,33 @@
-import mongoose from "mongoose";
+import { Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
+import mongoose from 'mongoose';
+import { Usuario } from 'src/usuario/interface/user.schema';
 
-export const DespesaSchema = new mongoose.Schema({
-  descricacao: { type: String, range: 1},
-  data: { type: Date},
-  valor: {type: Number},
-  usuario:{
-    type: mongoose.Schema.Types.ObjectId,
+@Schema({
+  timestamps: true
+})
+export class Despesa {
+  @Prop()
+  descricacao: string[191];
+
+  @Prop()
+  data: Date;
+
+  @Prop()
+  valor: number;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId ,
     ref: "Usuario"
+  })
+  usuario: Usuario;
+
+  constructor(despesa?: Partial<Despesa>){
+    this.data = despesa?.data;
+    this.descricacao = despesa?.descricacao;
+    this.usuario = despesa?.usuario;
+    this.valor = despesa?.valor;
   }
-},{ timestamps: true, collection: 'despesa'})
+
+}
+
+export const DespesaSchema = SchemaFactory.createForClass(Despesa);
