@@ -1,12 +1,22 @@
-import { Controller, Post, Get, Delete, Put, Body, Param, UsePipes,ValidationPipe} from '@nestjs/common';
+import { Controller, Post, Get, Delete, Put, Body, Param, UsePipes,ValidationPipe, UseGuards} from '@nestjs/common';
+import { HttpCode } from '@nestjs/common/decorators';
+import { HttpStatus } from '@nestjs/common/enums';
 import { CreateUserDto } from './dtos/create-user.dto';
+import { LoginDto } from './dtos/login.dto';
 import { UpdateUserDto } from './dtos/update-user.dto';
 import { Usuario } from './interface/usuario.interface';
 import { UsuarioService } from './usuario.service';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('api/usuario')
 export class UsuarioController {
   constructor(private readonly usuarioService: UsuarioService){}
+
+  @Get('/login')
+  async login(
+    @Body() loginDto: LoginDto): Promise<{token:string}>{
+    return await this.usuarioService.longin(loginDto);
+  }
 
   @Post()
   @UsePipes(ValidationPipe)
@@ -15,6 +25,7 @@ export class UsuarioController {
     return await this.usuarioService.createUser(createuserDto);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get()
   async getAllUsers(): Promise<Array<Usuario>>{
     return await this.usuarioService.getAllUser();
@@ -36,6 +47,7 @@ export class UsuarioController {
   }
 
   @Delete('/:_id')
+  @HttpCode(HttpStatus.NO_CONTENT)
   async deleteUsers(
     @Param('_id') _id: string
   ): Promise<void>{
