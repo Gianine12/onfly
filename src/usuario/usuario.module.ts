@@ -14,7 +14,7 @@ import { JwtStrategies } from './strategies/jwt.strategies';
     PassportModule.register({defaultStrategy: 'jwt'}),
     JwtModule.register({
       privateKey: process.env.JWT_SECRET_KEY,
-      signOptions: {expiresIn: '60s'}
+      signOptions: {expiresIn: '600s'}
     }),
     MongooseModule.forFeature([{name: 'Usuario', schema: UsuarioSchema}]),
   ],

@@ -47,7 +47,7 @@ describe('DespesaController', () => {
   describe('getAllExpenses' , () => {
     it('Sucesso, deve retornar uma lista de despesas', async() =>{
       // Arrange
-      const result = await despesaController.getAllExpenses();
+      const result = await despesaController.getAllExpenses('1');
       // Act
       // Assert
       expect(result).toEqual(listaDespesas);
@@ -60,66 +60,42 @@ describe('DespesaController', () => {
       jest.spyOn(despesaService, 'getAllExpense').mockRejectedValueOnce(new Error());
 
       // Assert
-      expect(despesaController.getAllExpenses()).rejects.toThrowError();
+      expect(despesaController.getAllExpenses('1')).rejects.toThrowError();
     });
   });
 
 
   // describe('createExpenses', () => {
-  //   it('Sucesso, deve criar um usuario', async () => {
-  //     const corpo: CreateUserDto = {name: "Gianine", avatarUrl : "" ,password: "Gianine123", email: "gianine@teste.com", phoneNumber: "31982656513"}
-  //     const result = await usuarioController.createUsers(corpo);
-
-  //     expect(result).toEqual(newUsuario);
-  //     expect(usuarioService.createUser).toHaveBeenCalledTimes(1);
-  //     expect(usuarioService.createUser).toHaveBeenCalledWith(corpo);
+  //   it('Sucesso, foi possivel criar uma despesa', async () => {
   //   });
 
-  //   it('Error, não deve criar um usuario', () =>{
-  //     const corpo: CreateUserDto = {name: "Gianine", avatarUrl : "" ,password: "Gianine123", email: "gianine@teste.com", phoneNumber: "31982656513"}
-  //     jest.spyOn(usuarioService, 'createUser').mockRejectedValueOnce(new Error());
-  //     expect(usuarioController.createUsers(corpo)).rejects.toThrowError();
+  //   it('Error, não foi possivel criar uma despesa', () =>{
+  //   });
   //   });
     
   // });
 
   // describe('getSpecificExpenses', () => {
-  //   it('Sucesso, buscar um usuario', async () => {
-  //     const result = await usuarioController.getSpecificUsers('1');
-  //     // Act
-  //     // Assert
-  //     expect(result).toEqual(listaUsuarios[0]);
+  //   it('Sucesso, a buscar uma despesa', async () => {
   //   });
 
-  //   it('Error, não deve encontrar o usuarios', () =>{
-  //     jest.spyOn(usuarioService, 'getUniqueUser').mockRejectedValueOnce(new Error());
-  //     expect(usuarioController.getSpecificUsers('1')).rejects.toThrowError();
+  //   it('Error, não consegue buscar uma despesa', () =>{
   //   });
   // });
 
   // describe('updateExpenses', () => {
-  //   it('Sucesso, deve atualizar um usuario', async () => {
-  //     const result = await usuarioController.updateUsers(listaUsuarios[0],'1');
-
-  //     expect(result).toEqual(updateUser);
-  //     expect(usuarioService.updateUser).toHaveBeenCalledWith(listaUsuarios[0],'1')
+  //   it('Sucesso, deve atualizar um despesa', async () => {
   //   });
 
   //   it('Error, não consegue atualizar o usuario', () =>{
-  //     jest.spyOn(usuarioService, 'updateUser').mockRejectedValueOnce(new Error());
-  //     expect(usuarioController.updateUsers(listaUsuarios[0],'1')).rejects.toThrowError();
   //   });
   // });
 
   // describe('deleteExpenses', () => {
-  //   it('Sucesso, deletou um usuario', async () => {
-  //     const result = await usuarioController.deleteUsers('1');
-  //     expect(result).toBeUndefined();
+  //   it('Sucesso, foi possivel deletar um despesa', async () => {
   //   });
 
-  //   it('Error, não foi possivel deletar um usuarios', () =>{
-  //     jest.spyOn(usuarioService, 'deleteUser').mockRejectedValueOnce(new Error());
-  //     expect(usuarioController.deleteUsers('1')).rejects.toThrowError();
+  //   it('Error, não foi possivel deletar o usuario', () =>{
   //   });
   // });
 });

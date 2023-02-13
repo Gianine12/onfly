@@ -1,28 +1,29 @@
-import { Controller, Post, Get, Put, Delete, UsePipes, ValidationPipe, Body, Param } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, UsePipes, ValidationPipe, Body, Param, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { DespesaService } from './despesas.service';
 import { CreateExpenseDto } from './dtos/create-expense.dto';
 import { UpdateExpenseDto } from './dtos/update-expense.dto';
 import { Despesa } from './interface/despesa.interface';
 
 @Controller('api/despesas')
+@UseGuards(AuthGuard('jwt'))
 export class DespesaController {
 
   constructor(private readonly despesasService: DespesaService){}
 
-  @Post('/:_id')
+  @Post()
   @UsePipes(ValidationPipe)
   async createExpenses(
     @Body() createExpenseDto: CreateExpenseDto,
-    @Param('_id') _id: string
     ) {
     return await this.despesasService.createExpense(createExpenseDto);
   }
 
-  @Get("/:_id")
+  @Get("/all/:_id")
   async getAllExpenses(
     @Param('_id') _id: string
   ): Promise<Array<Despesa>>{
-    return await this.despesasService.getAllExpense();
+    return await this.despesasService.getAllExpense(_id);
   }
 
   @Get('/:_id/usuario/:idUser')

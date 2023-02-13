@@ -1,7 +1,9 @@
-import {IsNumber, IsOptional, IsDateString, IsString} from 'class-validator';
+import {IsNumber, IsOptional, IsDateString, IsString, IsNotEmpty, MaxLength} from 'class-validator';
 
 export class UpdateExpenseDto{
+  @IsNotEmpty()
   @IsString()
+  @MaxLength(191)
   descricacao: string;
 
   @IsDateString()

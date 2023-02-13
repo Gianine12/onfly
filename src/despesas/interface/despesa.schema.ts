@@ -6,8 +6,8 @@ import { Usuario } from 'src/usuario/interface/user.schema';
   timestamps: true
 })
 export class Despesa {
-  @Prop()
-  descricacao: string[191];
+  @Prop({maxlength: 191})
+  descricacao: string;
 
   @Prop()
   data: Date;

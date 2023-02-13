@@ -1,8 +1,10 @@
 import { Usuario } from "src/usuario/interface/usuario.interface";
-import {IsNotEmpty, IsDateString} from 'class-validator';
+import {IsNotEmpty, IsDateString, IsString, MaxLength, MaxDate, IsISO8601, maxDate} from 'class-validator';
 
 export class CreateExpenseDto{
   @IsNotEmpty()
+  @IsString()
+  @MaxLength(191)
   descricacao: string;
 
   @IsDateString()

@@ -25,7 +25,6 @@ export class UsuarioController {
     return await this.usuarioService.createUser(createuserDto);
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Get()
   async getAllUsers(): Promise<Array<Usuario>>{
     return await this.usuarioService.getAllUser();
@@ -37,6 +36,7 @@ export class UsuarioController {
     return await this.usuarioService.getUniqueUser(_id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Put('/:_id')
   @UsePipes(ValidationPipe)
   async updateUsers(
@@ -46,6 +46,7 @@ export class UsuarioController {
     return await this.usuarioService.updateUser(updateUserDto, _id);
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Delete('/:_id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async deleteUsers(
